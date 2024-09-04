@@ -2,11 +2,47 @@
 
 [ext_resource type="Script" path="res://addons/godot-component-generator/main_panel.gd" id="1_ydkg8"]
 
-[node name="MainPanel" type="Control"]
-layout_mode = 3
+[node name="MainPanel" type="VBoxContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_ydkg8")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="LineEditSearch" type="LineEdit" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search components"
+
+[node name="BtnSearch" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = " Search "
+
+[node name="BtnSettings" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 4
+
+[node name="VBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="BtnImport" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Import selected component"
+
+[node name="BtnGenerate" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Generate new component"
