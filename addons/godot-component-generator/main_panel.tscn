@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkinm0nh03o8"]
+[gd_scene load_steps=3 format=3 uid="uid://dkinm0nh03o8"]
 
 [ext_resource type="Script" path="res://addons/godot-component-generator/main_panel.gd" id="1_ydkg8"]
+[ext_resource type="PackedScene" uid="uid://e7oq2abndy2r" path="res://addons/godot-component-generator/ComponentView/component_vew.tscn" id="2_xigoh"]
 
 [node name="MainPanel" type="VBoxContainer"]
 anchors_preset = 15
@@ -11,6 +12,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_ydkg8")
+componen_view = ExtResource("2_xigoh")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -31,6 +33,8 @@ text = "Settings"
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/h_separation = 13
+theme_override_constants/v_separation = 13
 columns = 4
 
 [node name="VBoxContainer2" type="HBoxContainer" parent="."]
