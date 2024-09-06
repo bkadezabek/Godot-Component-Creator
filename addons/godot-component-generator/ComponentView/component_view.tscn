@@ -1,25 +1,16 @@
 [gd_scene load_steps=3 format=3 uid="uid://e7oq2abndy2r"]
 
-[ext_resource type="Script" path="res://addons/godot-component-generator/ComponentView/component_vew.gd" id="1_fjbht"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dtev4"]
-bg_color = Color(0.14902, 0.14902, 0.14902, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.0901961, 0.0980392, 0.109804, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+[ext_resource type="StyleBox" uid="uid://d3vd0iapbtdo5" path="res://addons/godot-component-generator/ComponentView/default_view_stylebox.tres" id="1_377uh"]
+[ext_resource type="Script" path="res://addons/godot-component-generator/ComponentView/component_view.gd" id="1_ti520"]
 
 [node name="ComponentVew" type="PanelContainer"]
 custom_minimum_size = Vector2(480, 260)
 scale = Vector2(1.00113, 1)
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_dtev4")
-script = ExtResource("1_fjbht")
+tooltip_text = "RandomAudioStream"
+mouse_default_cursor_shape = 2
+theme_override_styles/panel = ExtResource("1_377uh")
+script = ExtResource("1_ti520")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)

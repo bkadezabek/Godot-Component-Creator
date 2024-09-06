@@ -2,7 +2,7 @@
 extends EditorPlugin
 
 const MainPanel = preload("res://addons/godot-component-generator/main_panel.tscn")
-var component_panel = preload("res://addons/godot-component-generator/ComponentView/component_vew.tscn")
+var component_panel = preload("res://addons/godot-component-generator/ComponentView/component_view.tscn")
 
 var main_panel_instance
 
@@ -12,8 +12,6 @@ func _enter_tree() -> void:
 	EditorInterface.get_editor_main_screen().add_child(main_panel_instance)
 	# Hide the main panel. Very much required.
 	main_panel_instance.hide()
-	
-	load_components()
 
 func _exit_tree() -> void:
 	if main_panel_instance:
