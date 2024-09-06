@@ -44,5 +44,6 @@ text = "This is a test description that will be shown in the main panel. Test"
 autowrap_mode = 2
 clip_text = true
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

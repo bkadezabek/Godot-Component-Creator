@@ -1,29 +1,22 @@
 @tool
 extends Control
 
+signal selected_component_signal(component_name, path, description)
+
 @onready var grid_container = $GridContainer
+@onready var btn_import = $VBoxContainer2/BtnImport
 
 @export var componen_view: PackedScene
 
 var component_view = preload("res://addons/godot-component-generator/ComponentView/component_view.tscn")
 var file_dialog = preload("res://addons/godot-component-generator/FileDialog/file_dialog.tscn")
 var export_path: String = ""  
+var current_selected_component_path: String = ""
+var num_of_subdirectories: int = 0
+var subdirectory_structure: Dictionary = {}
 
 func _ready() -> void:
-	pass
-
-func load_all() -> void:
-	grid_container.add_child(component_view.instantiate())
-	grid_container.add_child(component_view.instantiate())
-	grid_container.add_child(component_view.instantiate())
-	grid_container.add_child(component_view.instantiate())
-	
-	grid_container.add_child(component_view.instantiate())
-	grid_container.add_child(component_view.instantiate())
-	grid_container.add_child(component_view.instantiate())
-	grid_container.add_child(component_view.instantiate())
-	
-	grid_container.add_child(component_view.instantiate())
+	selected_component_signal.connect(_on_component_selected)
 
 func _on_btn_load_pressed() -> void:
 	print("LOAD FILE DIALOG")
@@ -34,48 +27,39 @@ func _on_btn_load_pressed() -> void:
 func _on_dir_selected(dir_path: String) -> void:
 	print("DIR PATH: ", dir_path)
 	export_path = dir_path
-	var num = count_folders_in_directory(export_path)
-	print("NUM OF SUBDIRECTORIES: ", num)
+	subdirectory_structure = get_folders_in_directory(export_path)
+	print("SUBDIRECTORIES: ", subdirectory_structure)
+	generate_component_views(subdirectory_structure)
 
-## Standard
-#var dir = DirAccess.open("user://levels")
-#dir.make_dir("world1")
-## Static
-#DirAccess.make_dir_absolute("user://levels/world1")
-#
-#Note: Many resources types are imported (e.g. textures or sound files), and their source asset will not be included in the exported game, as only the imported version is used. Use ResourceLoader to access imported resources.
-#
-#Here is an example on how to iterate through the files of a directory:
-#
-#func dir_contents(path):
-	#var dir = DirAccess.open(path)
-	#if dir:
-		#dir.list_dir_begin()
-		#var file_name = dir.get_next()
-		#while file_name != "":
-			#if dir.current_is_dir():
-				#print("Found directory: " + file_name)
-			#else:
-				#print("Found file: " + file_name)
-			#file_name = dir.get_next()
-	#else:
-		#print("An error occurred when trying to access the path.")
-
-
-
-func count_folders_in_directory(path: String) -> int:
+func get_folders_in_directory(path: String) -> Dictionary:
 	var dir = DirAccess.open(path)
 	var folder_count = 0
+	var folders_dict = {}
 	
 	if dir:
-		dir.list_dir_begin()  # Start listing the contents of the directory
-		
+		dir.list_dir_begin()
 		while true:
 			var item_name = dir.get_next()
 			if item_name == "":
 				break
 			if dir.current_is_dir() and item_name != "." and item_name != "..":
 				folder_count += 1
+				var full_path = path + "/" + str(item_name)
+				folders_dict[item_name] = full_path
 		dir.list_dir_end()
-	
-	return folder_count
+	num_of_subdirectories = folder_count
+	print("Number of folders: ", folder_count)
+	return folders_dict 
+
+func generate_component_views(target_structure: Dictionary) -> void:
+	for folder in target_structure:
+		var component_view_instance = component_view.instantiate() as PanelContainer
+		grid_container.add_child(component_view_instance)
+		component_view_instance.prepare_values(str(folder), str(target_structure[folder]))
+
+func _on_component_selected(component_name: String, component_path: String, component_desc: String) -> void:
+	current_selected_component_path = component_path
+	btn_import.disabled = false
+
+func _on_btn_import_pressed():
+	print("IMPORT PATH: ", current_selected_component_path)
