@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkinm0nh03o8"]
+[gd_scene load_steps=2 format=3 uid="uid://dkinm0nh03o8"]
 
 [ext_resource type="Script" path="res://addons/godot-component-generator/main_panel.gd" id="1_ydkg8"]
-[ext_resource type="PackedScene" uid="uid://e7oq2abndy2r" path="res://addons/godot-component-generator/ComponentView/component_view.tscn" id="2_eucic"]
 
 [node name="MainPanel" type="VBoxContainer"]
 anchors_preset = 15
@@ -12,27 +11,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_ydkg8")
-componen_view = ExtResource("2_eucic")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 2
-
-[node name="LineEditSearch" type="LineEdit" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "Search components"
-
-[node name="BtnSearch" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = " Search "
-
-[node name="BtnSettings" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "Settings"
-
-[node name="BtnLoad" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "Set component directory"
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 2
@@ -43,6 +21,11 @@ columns = 4
 
 [node name="VBoxContainer2" type="HBoxContainer" parent="."]
 layout_mode = 2
+
+[node name="BtnLoad" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Set components directory"
 
 [node name="BtnImport" type="Button" parent="VBoxContainer2"]
 layout_mode = 2
@@ -55,5 +38,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Generate component"
 
-[connection signal="pressed" from="HBoxContainer/BtnLoad" to="." method="_on_btn_load_pressed"]
+[connection signal="pressed" from="VBoxContainer2/BtnLoad" to="." method="_on_btn_load_pressed"]
 [connection signal="pressed" from="VBoxContainer2/BtnImport" to="." method="_on_btn_import_pressed"]

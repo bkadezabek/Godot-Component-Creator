@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://du15r561ucjev"]
+
+[node name="FileDialogTarget" type="FileDialog"]
+title = "Open a Directory"
+initial_position = 1
+size = Vector2i(860, 600)
+visible = true
+min_size = Vector2i(500, 350)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
