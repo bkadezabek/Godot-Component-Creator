@@ -13,6 +13,7 @@ var export_path: String = ""
 var current_selected_component_path: String = ""
 var num_of_subdirectories: int = 0
 var subdirectory_structure: Dictionary = {}
+var selected_component_name: String = ""
 
 func _ready() -> void:
 	selected_component_signal.connect(_on_component_selected)
@@ -58,6 +59,7 @@ func generate_component_views(target_structure: Dictionary) -> void:
 
 func _on_component_selected(component_name: String, component_path: String, component_desc: String) -> void:
 	current_selected_component_path = component_path
+	selected_component_name = component_name
 	btn_import.disabled = false
 
 func _on_btn_import_pressed() -> void:
@@ -68,14 +70,21 @@ func _on_btn_import_pressed() -> void:
 
 func _on_dir_target_selected(destination_path: String) -> void:
 	print("PATH TO IMPORT: ", destination_path)
-	copy_folder(current_selected_component_path, destination_path)
+	var new_destination_path: String = destination_path + "/" + selected_component_name
+	create_target_directory(destination_path)
+	copy_folder(current_selected_component_path, new_destination_path)
 
+func create_target_directory(dest_path: String) -> void:
+	var dir: DirAccess = DirAccess.open(dest_path)
+	dir.make_dir(selected_component_name)
+	
 func copy_folder(source_path: String, dest_path: String) -> void:
 	print("SOURCE:", source_path, " DEST: ", dest_path)
 	var dir: DirAccess = DirAccess.open(source_path)
 	if dir == null:
 		print("Error: Cannot open source directory: ", source_path)
 		return
+	dir.make_dir(dest_path)
 	var dest_dir: DirAccess = DirAccess.open(dest_path)
 	if dest_dir == null:
 		print("Destination directory does not exist. Creating: ", dest_path)
@@ -83,7 +92,6 @@ func copy_folder(source_path: String, dest_path: String) -> void:
 		if result != OK:
 			print("Error: Failed to create destination directory: ", dest_path)
 			return
-	
 	dir.list_dir_begin()  # Begin listing the directory
 	
 	var file_name = dir.get_next()  # Get the first file
@@ -110,7 +118,11 @@ func copy_folder(source_path: String, dest_path: String) -> void:
 						print("Error: Cannot open destination file for writing: ", dest_file_path)
 				else:
 					print("Error: Cannot open source file for reading: ", src_file_path)
-		
 		file_name = dir.get_next()  # Get the next file
 	
 	dir.list_dir_end()  # End listing the directory
+	
+	reload_dock_filesystem()
+
+func reload_dock_filesystem() -> void:
+	EditorInterface.get_resource_filesystem().scan()
