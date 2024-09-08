@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://addons/godot-component-generator/ComponentView/component_view.gd" id="1_ti520"]
 
 [node name="ComponentVew" type="PanelContainer"]
-custom_minimum_size = Vector2(480, 100)
+custom_minimum_size = Vector2(500, 100)
 scale = Vector2(1.00113, 1)
 size_flags_horizontal = 3
 tooltip_text = "RandomAudioStream"
@@ -31,10 +31,12 @@ text = "RandomAudioStream"
 clip_text = true
 
 [node name="LblPath" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 80)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.698039, 0.698039, 0.698039, 1)
-theme_override_font_sizes/font_size = 12
-text = "user/test_user/gd_components/random_audio_stream_player"
+theme_override_font_sizes/font_size = 14
+text = "user/test_user/gd_components/random_audio_stream_player/random_audio_stream_player/random_audio_stream_player/random_audio_stream_player/"
+autowrap_mode = 3
 clip_text = true
 
 [node name="LblDescription" type="Label" parent="MarginContainer/VBoxContainer"]
