@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://e7oq2abndy2r"]
 
-[ext_resource type="StyleBox" uid="uid://d3vd0iapbtdo5" path="res://addons/godot-component-generator/ComponentView/default_view_stylebox.tres" id="1_377uh"]
+[ext_resource type="StyleBox" uid="uid://d3vd0iapbtdo5" path="res://addons/godot-component-generator/COMPONENT_TEST_TARGET/ComponentView/default_view_stylebox.tres" id="1_377uh"]
 [ext_resource type="Script" path="res://addons/godot-component-generator/ComponentView/component_view.gd" id="1_ti520"]
 
 [node name="ComponentVew" type="PanelContainer"]
-custom_minimum_size = Vector2(480, 260)
+custom_minimum_size = Vector2(480, 100)
 scale = Vector2(1.00113, 1)
 size_flags_horizontal = 3
 tooltip_text = "RandomAudioStream"
@@ -38,7 +38,7 @@ text = "user/test_user/gd_components/random_audio_stream_player"
 clip_text = true
 
 [node name="LblDescription" type="Label" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 200)
+custom_minimum_size = Vector2(400, 125)
 layout_mode = 2
 text = "This is a test description that will be shown in the main panel. Test"
 autowrap_mode = 2

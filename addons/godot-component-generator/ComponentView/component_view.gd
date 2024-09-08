@@ -13,7 +13,17 @@ var component_path: String
 var component_description: String
 
 func _ready() -> void:
+	prepare_view_structure()
 	parent = get_parent().get_parent()
+
+func prepare_view_structure() -> void:
+	var settings = EditorInterface.get_editor_settings()
+	var show_description_state: bool = settings.get_setting("plugin/component_creator/show_description_of_components")
+	print(show_description_state)
+	if show_description_state:
+		lbl_description.visible = true
+	else:
+		lbl_description.visible = false 
 
 func _on_mouse_entered() -> void:
 	component_view.self_modulate = Color(0.9, 0.9, 0.9)

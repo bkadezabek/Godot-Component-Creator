@@ -6,8 +6,6 @@ signal selected_component_signal(component_name, path, description)
 @onready var grid_container = $GridContainer
 @onready var btn_import = $VBoxContainer2/BtnImport
 
-#const SAVED_COMPONENT_LIBRARY_PATH: StringName = GODOT_COMPONENT_CREATOR + &"saved_component_library_path"
-
 var component_view: PackedScene = preload("res://addons/godot-component-generator/ComponentView/component_view.tscn")
 var file_dialog: PackedScene = preload("res://addons/godot-component-generator/FileDialog/file_dialog.tscn")
 var file_dialog_target: PackedScene = preload("res://addons/godot-component-generator/FileDialogTarget/file_dialog_target.tscn")
@@ -20,15 +18,17 @@ var selected_component_name: String = ""
 func _ready() -> void:
 	selected_component_signal.connect(_on_component_selected)
 	prepare_custom_plugin_settings()
+	load_components()
 
 func prepare_custom_plugin_settings() -> void:
 	var settings = EditorInterface.get_editor_settings()
+	settings.settings_changed.connect(_on_settings_changed)
 	if settings.get_setting("plugin/component_creator/component_library_path") == null or \
 		settings.get_setting("plugin/component_creator/component_library_path") == "":
 		var component_library_path_properties = {
 			"name": "plugin/component_creator/component_library_path",
 			"type": TYPE_STRING,
-			"hint": PROPERTY_HINT_DIR,
+			"hint": PROPERTY_HINT_GLOBAL_DIR,
 			"hint_string": "example/test"
 		}
 		var show_description_of_components_properties = {
@@ -38,20 +38,37 @@ func prepare_custom_plugin_settings() -> void:
 		}
 		settings.add_property_info(component_library_path_properties)
 		settings.add_property_info(show_description_of_components_properties)
-		
 		settings.set_setting("plugin/component_creator/component_library_path", "example/test")
 		settings.set_setting("plugin/component_creator/show_description_of_components", true)
-		
 		print("NEWLY CREATED")
 	else:
 		print("I ALREADY EXIST")
 		return
 
+func _on_settings_changed() -> void:
+	print("SOME SETTING HAS CHANGED")
+	load_components()
+
+func load_components() -> void:
+	clear_components_as_grid_children()
+	var settings = EditorInterface.get_editor_settings()
+	var path_from_settings: String = settings.get_setting("plugin/component_creator/component_library_path")
+	var dir: DirAccess = DirAccess.open(path_from_settings)
+	if dir == null: return
+	if path_from_settings == null or path_from_settings == "" or not dir.dir_exists(path_from_settings):
+		return
+	else:
+		_on_dir_selected(path_from_settings)
+
+func clear_components_as_grid_children() -> void:
+	for child in grid_container.get_children():
+		child.queue_free()
+
 func _on_btn_load_pressed() -> void:
 	var file_dialog_instance = file_dialog.instantiate()
 	add_child(file_dialog_instance)
 	file_dialog_instance.dir_selected.connect(_on_dir_selected)
-	
+
 func _on_dir_selected(dir_path: String) -> void:
 	export_path = dir_path
 	subdirectory_structure = get_folders_in_directory(export_path)
