@@ -6,6 +6,8 @@ signal selected_component_signal(component_name, path, description)
 @onready var grid_container = $GridContainer
 @onready var btn_import = $VBoxContainer2/BtnImport
 
+#const SAVED_COMPONENT_LIBRARY_PATH: StringName = GODOT_COMPONENT_CREATOR + &"saved_component_library_path"
+
 var component_view: PackedScene = preload("res://addons/godot-component-generator/ComponentView/component_view.tscn")
 var file_dialog: PackedScene = preload("res://addons/godot-component-generator/FileDialog/file_dialog.tscn")
 var file_dialog_target: PackedScene = preload("res://addons/godot-component-generator/FileDialogTarget/file_dialog_target.tscn")
@@ -17,18 +19,42 @@ var selected_component_name: String = ""
 
 func _ready() -> void:
 	selected_component_signal.connect(_on_component_selected)
+	prepare_custom_plugin_settings()
+
+func prepare_custom_plugin_settings() -> void:
+	var settings = EditorInterface.get_editor_settings()
+	if settings.get_setting("plugin/component_creator/component_library_path") == null or \
+		settings.get_setting("plugin/component_creator/component_library_path") == "":
+		var component_library_path_properties = {
+			"name": "plugin/component_creator/component_library_path",
+			"type": TYPE_STRING,
+			"hint": PROPERTY_HINT_DIR,
+			"hint_string": "example/test"
+		}
+		var show_description_of_components_properties = {
+			"name": "plugin/component_creator/show_description_of_components",
+			"type": TYPE_BOOL,
+			"hint_string": "example/test"
+		}
+		settings.add_property_info(component_library_path_properties)
+		settings.add_property_info(show_description_of_components_properties)
+		
+		settings.set_setting("plugin/component_creator/component_library_path", "example/test")
+		settings.set_setting("plugin/component_creator/show_description_of_components", true)
+		
+		print("NEWLY CREATED")
+	else:
+		print("I ALREADY EXIST")
+		return
 
 func _on_btn_load_pressed() -> void:
-	print("LOAD FILE DIALOG")
 	var file_dialog_instance = file_dialog.instantiate()
 	add_child(file_dialog_instance)
 	file_dialog_instance.dir_selected.connect(_on_dir_selected)
 	
 func _on_dir_selected(dir_path: String) -> void:
-	print("DIR PATH: ", dir_path)
 	export_path = dir_path
 	subdirectory_structure = get_folders_in_directory(export_path)
-	print("SUBDIRECTORIES: ", subdirectory_structure)
 	generate_component_views(subdirectory_structure)
 
 func get_folders_in_directory(path: String) -> Dictionary:
@@ -48,7 +74,6 @@ func get_folders_in_directory(path: String) -> Dictionary:
 				folders_dict[item_name] = full_path
 		dir.list_dir_end()
 	num_of_subdirectories = folder_count
-	print("Number of folders: ", folder_count)
 	return folders_dict 
 
 func generate_component_views(target_structure: Dictionary) -> void:
@@ -63,13 +88,11 @@ func _on_component_selected(component_name: String, component_path: String, comp
 	btn_import.disabled = false
 
 func _on_btn_import_pressed() -> void:
-	print("IMPORT PATH: ", current_selected_component_path)
 	var file_dialog_target_instance = file_dialog_target.instantiate()
 	add_child(file_dialog_target_instance)
 	file_dialog_target_instance.dir_selected.connect(_on_dir_target_selected)
 
 func _on_dir_target_selected(destination_path: String) -> void:
-	print("PATH TO IMPORT: ", destination_path)
 	var new_destination_path: String = destination_path + "/" + selected_component_name
 	create_target_directory(destination_path)
 	copy_folder(current_selected_component_path, new_destination_path)
@@ -79,18 +102,17 @@ func create_target_directory(dest_path: String) -> void:
 	dir.make_dir(selected_component_name)
 	
 func copy_folder(source_path: String, dest_path: String) -> void:
-	print("SOURCE:", source_path, " DEST: ", dest_path)
 	var dir: DirAccess = DirAccess.open(source_path)
 	if dir == null:
-		print("Error: Cannot open source directory: ", source_path)
+		printerr("Error: Cannot open source directory: ", source_path)
 		return
 	dir.make_dir(dest_path)
 	var dest_dir: DirAccess = DirAccess.open(dest_path)
 	if dest_dir == null:
-		print("Destination directory does not exist. Creating: ", dest_path)
+		printerr("Destination directory does not exist. Creating: ", dest_path)
 		var result = dest_dir.make_dir_recursive(dest_path)
 		if result != OK:
-			print("Error: Failed to create destination directory: ", dest_path)
+			printerr("Error: Failed to create destination directory: ", dest_path)
 			return
 	dir.list_dir_begin()  # Begin listing the directory
 	
@@ -101,23 +123,20 @@ func copy_folder(source_path: String, dest_path: String) -> void:
 			var dest_file_path = dest_path + "/" + file_name
 			
 			if dir.current_is_dir():  # If it's a directory, copy recursively
-				print("Copying folder: ", src_file_path, " to ", dest_file_path)
 				copy_folder(src_file_path, dest_file_path)  # Recursive call
 			else:  # If it's a file, copy the file
-				print("Copying file: ", src_file_path, " to ", dest_file_path)
 				var file = FileAccess.open(src_file_path, FileAccess.READ)
 				if file:
 					var file_data = file.get_buffer(file.get_length())
 					file.close()
-					
 					var dest_file = FileAccess.open(dest_file_path, FileAccess.WRITE)
 					if dest_file:
 						dest_file.store_buffer(file_data)
 						dest_file.close()
 					else:
-						print("Error: Cannot open destination file for writing: ", dest_file_path)
+						printerr("Error: Cannot open destination file for writing: ", dest_file_path)
 				else:
-					print("Error: Cannot open source file for reading: ", src_file_path)
+					printerr("Error: Cannot open source file for reading: ", src_file_path)
 		file_name = dir.get_next()  # Get the next file
 	
 	dir.list_dir_end()  # End listing the directory
