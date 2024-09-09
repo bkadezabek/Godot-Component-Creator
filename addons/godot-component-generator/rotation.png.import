@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b43hf31y6hkoa"
-path="res://.godot/imported/ResourcePreloader.svg-ea55bac9babcd6abbbf484e03aecc1dc.ctex"
+uid="uid://r8vh3ujga44n"
+path="res://.godot/imported/rotation.png-438935ec501b31c42d947311b9b27a8a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot-component-generator/ResourcePreloader.svg"
-dest_files=["res://.godot/imported/ResourcePreloader.svg-ea55bac9babcd6abbbf484e03aecc1dc.ctex"]
+source_file="res://addons/godot-component-generator/rotation.png"
+dest_files=["res://.godot/imported/rotation.png-438935ec501b31c42d947311b9b27a8a.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

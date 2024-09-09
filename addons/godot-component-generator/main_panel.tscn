@@ -47,7 +47,7 @@ text = "Import component"
 [node name="BtnGenerate" type="Button" parent="VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Generate component"
+text = "Generate a new component"
 
 [connection signal="pressed" from="VBoxContainer2/BtnLoad" to="." method="_on_btn_load_pressed"]
 [connection signal="pressed" from="VBoxContainer2/BtnImport" to="." method="_on_btn_import_pressed"]

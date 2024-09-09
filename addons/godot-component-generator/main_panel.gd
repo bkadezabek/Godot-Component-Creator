@@ -114,6 +114,8 @@ func _on_component_selected(component_name: String, component_path: String, comp
 	current_selected_component_path = component_path
 	selected_component_name = component_name
 	btn_import.disabled = false
+	btn_import.text = "Import component"
+	btn_import.text = btn_import.text + ": " + component_name
 
 func _on_btn_import_pressed() -> void:
 	var file_dialog_instance = file_dialog.instantiate()
@@ -175,10 +177,9 @@ func reload_dock_filesystem() -> void:
 	EditorInterface.get_resource_filesystem().scan()
 
 func reload_filesystem() -> void:
-	clear_components_as_grid_children()
-	
 	var settings = EditorInterface.get_editor_settings()
 	var path_from_settings: String = settings.get_setting("plugin/component_creator/component_library_path")
+	clear_components_as_grid_children()
 	_on_dir_selected(path_from_settings)
 
 func _on_btn_generate_pressed() -> void:

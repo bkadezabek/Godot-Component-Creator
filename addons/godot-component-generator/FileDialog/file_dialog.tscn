@@ -3,8 +3,9 @@
 [node name="FileDialog" type="FileDialog"]
 title = "Open a Directory"
 initial_position = 1
-size = Vector2i(720, 550)
+size = Vector2i(720, 680)
 visible = true
+min_size = Vector2i(720, 680)
 ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2
