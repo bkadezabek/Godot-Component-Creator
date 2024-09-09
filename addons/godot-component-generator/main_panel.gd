@@ -41,14 +41,11 @@ func prepare_custom_plugin_settings() -> void:
 		settings.add_property_info(component_library_path_properties)
 		settings.add_property_info(show_description_of_components_properties)
 		settings.set_setting("plugin/component_creator/component_library_path", "example/test")
-		settings.set_setting("plugin/component_creator/show_description_of_components", true)
-		print("NEWLY CREATED")
+		settings.set_setting("plugin/component_creator/show_description_of_components", false)
 	else:
-		print("I ALREADY EXIST")
 		return
 
 func _on_settings_changed() -> void:
-	print("SOME SETTING HAS CHANGED")
 	load_components()
 
 func load_components() -> void:
@@ -192,7 +189,6 @@ func _on_dir_save_target_selected(dir_path_target: String) -> void:
 	if dir:
 		var current_dir = dir.get_current_dir() # Get the full path
 		var current_dir_name = current_dir.get_file() # Get just the directory name jer je . i ..
-		print("Current Directory Name THAT WAS SELECTED: ", current_dir_name)
 		selected_component_for_generation_name = current_dir_name
 		generate_new_component(export_path, current_dir_name, dir_path_target)
 

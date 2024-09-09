@@ -19,7 +19,6 @@ func _ready() -> void:
 func prepare_view_structure() -> void:
 	var settings = EditorInterface.get_editor_settings()
 	var show_description_state: bool = settings.get_setting("plugin/component_creator/show_description_of_components")
-	print(show_description_state)
 	if show_description_state:
 		lbl_description.visible = true
 	else:
