@@ -8,16 +8,16 @@ Icon attribution: <a href="https://www.flaticon.com/free-icon/rotation_2161786" 
 NOTE: Issues and Pull Requests are always welcome :)
 
 ## How to use the plugin
-To use the plugin either download it from the Godot Asset Library: (HREF). Or clone it from github manually. Make sure to enable it under plugins in project (Project Settings > Plugins)! 
+To use the plugin, either download it from the Godot Asset Library: (HREF). Or clone it from GitHub manually. Make sure to enable it under plugins in project (Project Settings > Plugins)!
 
-The plugin also has additional settings in the Editor Settings unuter (Project Settings > Plugins > Component Creator) that make it persistent accross all projects. Meaning you only have to configure it once and it will stay consistent accross all projects. You will hoever have to redownload the plugin every new project but that is a minor inconvinience.
+The plugin also has additional settings in the Editor Settings under (Project Settings > Plugins > Component Creator) that make it persistent across all projects. Meaning, you only have to configure it once and it will stay consistent across all projects. You will however have to redownload the plugin every new project, but that is a minor inconvenience.
 
-To use the plugin you can find it at the top bar under the name Component Creator. There you will be able to set the path to the library component folder ("Set components directory" button on the bottom left) that will contain copies of all of your components that you will use for the forseable future. It is RECOMENDED that the folder is outside any Godot project, to not mess anything up. You can always manually set the path from the Editor Settings.
+To use the plugin, you can find it at the top bar under the name Component Creator. You can set the path to the library component folder ("Set components directory" button on the bottom left) that will contain copies of all of your components that you will use for the forseable future. It is RECOMMENDED that the folder is outside any Godot project, to not mess anything up. You can always manually set the path from the Editor Settings.
 
-Once you create and add the folder as a path. You will be able to generate components. To generate a component, the components should always be inside of a folder of a telling name, cause the name that the component will get is the name of the folder that it is contained within. Menaing you cannot mix and match what files get to what component from paths that differ beyond the root of the component. So make sure that the component is contained within that folder and that it works by itself or in tandem with other components, for instance hit and hurt boxes. To generate it pick a folder that is one INDUVIDUAL component and hit Create.
+Once you create and add the folder as a path. You will be able to generate components. To generate a component, the components should always be inside a folder of a telling name, cause the name that the component will get is the name of the folder that it is contained within. Meaning, you cannot mix and match what files get to what component from paths that differ beyond the root of the component. So make sure that the component is contained within that folder and that it works by itself or in tandem with other components, for instance hit and hurt boxes. To generate it pick a folder that is one INDIVIDUAL component and hit Create.
 
 Now you can import that component across all your project by hitting the import button after electing the component from the GridContainer within the Component Creator viewport window.
 
-If for what ever reason some part of the plugin does not autorefresh go to (Project Settings > Plugins) and disable and then re-enable the Godot Component Creator plugin. 
+If for what ever reason some part of the plugin does not autorefresh go to (Project Settings > Plugins) and disable and then re-enable the Godot Component Creator plugin.
 
 Have fun coding games :)
