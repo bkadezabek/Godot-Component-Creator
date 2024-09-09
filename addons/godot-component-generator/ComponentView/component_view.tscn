@@ -40,6 +40,7 @@ autowrap_mode = 3
 clip_text = true
 
 [node name="LblDescription" type="Label" parent="MarginContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(400, 125)
 layout_mode = 2
 text = "This is a test description that will be shown in the main panel. Test"

@@ -19,6 +19,17 @@ theme_override_constants/h_separation = 13
 theme_override_constants/v_separation = 13
 columns = 4
 
+[node name="LblMessage" type="Label" parent="."]
+custom_minimum_size = Vector2(2.08165e-12, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "1. Set the component directory somewhere on your machine.
+2. Generate a component from this or other projects into that directory.
+3. Then import them as you wish across all projects. Just add this plugin :)
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
 [node name="VBoxContainer2" type="HBoxContainer" parent="."]
 layout_mode = 2
 
@@ -40,3 +51,4 @@ text = "Generate component"
 
 [connection signal="pressed" from="VBoxContainer2/BtnLoad" to="." method="_on_btn_load_pressed"]
 [connection signal="pressed" from="VBoxContainer2/BtnImport" to="." method="_on_btn_import_pressed"]
+[connection signal="pressed" from="VBoxContainer2/BtnGenerate" to="." method="_on_btn_generate_pressed"]

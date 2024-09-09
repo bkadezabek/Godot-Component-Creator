@@ -43,7 +43,7 @@ func prepare_values(local_component_name: String, path: String = "C://", descrip
 	lbl_description.text = component_description
 	prepare_tooltip(local_component_name,  path)
 
-func _on_gui_input(event):
+func _on_gui_input(event) -> void:
 	if event.is_pressed() == true:
 		component_view.self_modulate = Color(0.7, 0.7, 0.7)
 		parent.selected_component_signal.emit(component_name, component_path, component_description)

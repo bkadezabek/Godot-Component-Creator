@@ -5,6 +5,7 @@ signal selected_component_signal(component_name, path, description)
 
 @onready var grid_container = $GridContainer
 @onready var btn_import = $VBoxContainer2/BtnImport
+@onready var lbl_message = $LblMessage
 
 var component_view: PackedScene = preload("res://addons/godot-component-generator/ComponentView/component_view.tscn")
 var file_dialog: PackedScene = preload("res://addons/godot-component-generator/FileDialog/file_dialog.tscn")
@@ -14,6 +15,7 @@ var current_selected_component_path: String = ""
 var num_of_subdirectories: int = 0
 var subdirectory_structure: Dictionary = {}
 var selected_component_name: String = ""
+var selected_component_for_generation_name: String = ""
 
 func _ready() -> void:
 	selected_component_signal.connect(_on_component_selected)
@@ -72,7 +74,12 @@ func _on_btn_load_pressed() -> void:
 func _on_dir_selected(dir_path: String) -> void:
 	export_path = dir_path
 	subdirectory_structure = get_folders_in_directory(export_path)
+	set_library_path_from_selected_dir(dir_path)
 	generate_component_views(subdirectory_structure)
+
+func set_library_path_from_selected_dir(dir_path: String) -> void:
+	var settings = EditorInterface.get_editor_settings()
+	settings.set_setting("plugin/component_creator/component_library_path", dir_path)
 
 func get_folders_in_directory(path: String) -> Dictionary:
 	var dir: DirAccess = DirAccess.open(path)
@@ -91,6 +98,10 @@ func get_folders_in_directory(path: String) -> Dictionary:
 				folders_dict[item_name] = full_path
 		dir.list_dir_end()
 	num_of_subdirectories = folder_count
+	if folder_count == 0:
+		lbl_message.visible = true
+	else:
+		lbl_message.visible = false
 	return folders_dict 
 
 func generate_component_views(target_structure: Dictionary) -> void:
@@ -105,9 +116,9 @@ func _on_component_selected(component_name: String, component_path: String, comp
 	btn_import.disabled = false
 
 func _on_btn_import_pressed() -> void:
-	var file_dialog_target_instance = file_dialog_target.instantiate()
-	add_child(file_dialog_target_instance)
-	file_dialog_target_instance.dir_selected.connect(_on_dir_target_selected)
+	var file_dialog_instance = file_dialog.instantiate()
+	add_child(file_dialog_instance)
+	file_dialog_instance.dir_selected.connect(_on_dir_target_selected)
 
 func _on_dir_target_selected(destination_path: String) -> void:
 	var new_destination_path: String = destination_path + "/" + selected_component_name
@@ -136,7 +147,7 @@ func copy_folder(source_path: String, dest_path: String) -> void:
 	var file_name = dir.get_next()  # Get the first file
 	while file_name != "":  # Continue until the end
 		if file_name != "." and file_name != "..":  # Skip "." and ".."
-			var src_file_path = source_path + file_name
+			var src_file_path = source_path + "/"+ file_name
 			var dest_file_path = dest_path + "/" + file_name
 			
 			if dir.current_is_dir():  # If it's a directory, copy recursively
@@ -154,11 +165,40 @@ func copy_folder(source_path: String, dest_path: String) -> void:
 						printerr("Error: Cannot open destination file for writing: ", dest_file_path)
 				else:
 					printerr("Error: Cannot open source file for reading: ", src_file_path)
-		file_name = dir.get_next()  # Get the next file
+		file_name = dir.get_next()
 	
-	dir.list_dir_end()  # End listing the directory
+	dir.list_dir_end()
 	
 	reload_dock_filesystem()
 
 func reload_dock_filesystem() -> void:
 	EditorInterface.get_resource_filesystem().scan()
+
+func reload_filesystem() -> void:
+	clear_components_as_grid_children()
+	
+	var settings = EditorInterface.get_editor_settings()
+	var path_from_settings: String = settings.get_setting("plugin/component_creator/component_library_path")
+	_on_dir_selected(path_from_settings)
+
+func _on_btn_generate_pressed() -> void:
+	var file_dialog_target_instance = file_dialog_target.instantiate()
+	add_child(file_dialog_target_instance)
+	file_dialog_target_instance.dir_selected.connect(_on_dir_save_target_selected)
+
+func _on_dir_save_target_selected(dir_path_target: String) -> void:
+	var dir: DirAccess = DirAccess.open(dir_path_target)
+	if dir:
+		var current_dir = dir.get_current_dir() # Get the full path
+		var current_dir_name = current_dir.get_file() # Get just the directory name jer je . i ..
+		print("Current Directory Name THAT WAS SELECTED: ", current_dir_name)
+		selected_component_for_generation_name = current_dir_name
+		generate_new_component(export_path, current_dir_name, dir_path_target)
+
+func generate_new_component(lib_path: String, component_name: String, component_path_to_copy: String) -> void:
+	var dir: DirAccess = DirAccess.open(lib_path)
+	dir.make_dir(component_name)
+	copy_folder(component_path_to_copy, lib_path + "/" + component_name)
+	
+	reload_filesystem()
+	reload_dock_filesystem()

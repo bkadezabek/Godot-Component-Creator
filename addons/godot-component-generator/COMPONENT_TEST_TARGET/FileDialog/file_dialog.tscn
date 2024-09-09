@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cwisybrbdfn2p"]
+
+[node name="FileDialog" type="FileDialog"]
+title = "Open a Directory"
+initial_position = 1
+size = Vector2i(720, 550)
+visible = true
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+filters = PackedStringArray("*.gd; GDScript files", "*.tscn; Scene file", "*.tres; Resource file")
