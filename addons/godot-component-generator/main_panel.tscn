@@ -19,7 +19,15 @@ theme_override_constants/h_separation = 13
 theme_override_constants/v_separation = 13
 columns = 4
 
+[node name="GridContainer" type="GridContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 13
+theme_override_constants/v_separation = 13
+columns = 4
+
 [node name="LblMessage" type="Label" parent="."]
+visible = false
 custom_minimum_size = Vector2(2.08165e-12, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
@@ -49,6 +57,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Generate a new component"
 
+[connection signal="gui_input" from="GridContainer/ComponentVew" to="GridContainer/ComponentVew" method="_on_gui_input"]
+[connection signal="mouse_entered" from="GridContainer/ComponentVew" to="GridContainer/ComponentVew" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="GridContainer/ComponentVew" to="GridContainer/ComponentVew" method="_on_mouse_exited"]
+[connection signal="gui_input" from="GridContainer/@PanelContainer@17486" to="GridContainer/@PanelContainer@17486" method="_on_gui_input"]
+[connection signal="mouse_entered" from="GridContainer/@PanelContainer@17486" to="GridContainer/@PanelContainer@17486" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="GridContainer/@PanelContainer@17486" to="GridContainer/@PanelContainer@17486" method="_on_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer2/BtnLoad" to="." method="_on_btn_load_pressed"]
 [connection signal="pressed" from="VBoxContainer2/BtnImport" to="." method="_on_btn_import_pressed"]
 [connection signal="pressed" from="VBoxContainer2/BtnGenerate" to="." method="_on_btn_generate_pressed"]
