@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://dkinm0nh03o8"]
 
-[ext_resource type="Script" path="res://addons/godot-component-generator/main_panel.gd" id="1_ydkg8"]
+[ext_resource type="Script" uid="uid://biprpng8ly5ww" path="res://addons/godot-component-generator/main_panel.gd" id="1_ydkg8"]
 
-[node name="MainPanel" type="VBoxContainer"]
+[node name="MoreScroll" type="ScrollContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -10,23 +10,31 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Vbox" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ComponentScrollContainer" type="ScrollContainer" parent="Vbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MainPanel" type="VBoxContainer" parent="Vbox/ComponentScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_ydkg8")
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="GridContainer" type="GridContainer" parent="Vbox/ComponentScrollContainer/MainPanel"]
 layout_mode = 2
-size_flags_vertical = 3
 theme_override_constants/h_separation = 13
 theme_override_constants/v_separation = 13
-columns = 4
+columns = 3
 
-[node name="GridContainer" type="GridContainer" parent="GridContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/h_separation = 13
-theme_override_constants/v_separation = 13
-columns = 4
-
-[node name="LblMessage" type="Label" parent="."]
+[node name="LblMessage" type="Label" parent="Vbox/ComponentScrollContainer/MainPanel"]
 visible = false
 custom_minimum_size = Vector2(2.08165e-12, 50)
 layout_mode = 2
@@ -38,31 +46,58 @@ text = "1. Set the component directory somewhere on your machine.
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="VBoxContainer2" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="HBoxContainer" parent="Vbox"]
 layout_mode = 2
 
-[node name="BtnLoad" type="Button" parent="VBoxContainer2"]
+[node name="BtnLoad" type="Button" parent="Vbox/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "Set components directory"
 
-[node name="BtnImport" type="Button" parent="VBoxContainer2"]
+[node name="BtnImport" type="Button" parent="Vbox/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
 text = "Import component"
 
-[node name="BtnGenerate" type="Button" parent="VBoxContainer2"]
+[node name="BtnGenerate" type="Button" parent="Vbox/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Generate a new component"
 
-[connection signal="gui_input" from="GridContainer/ComponentVew" to="GridContainer/ComponentVew" method="_on_gui_input"]
-[connection signal="mouse_entered" from="GridContainer/ComponentVew" to="GridContainer/ComponentVew" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="GridContainer/ComponentVew" to="GridContainer/ComponentVew" method="_on_mouse_exited"]
-[connection signal="gui_input" from="GridContainer/@PanelContainer@17486" to="GridContainer/@PanelContainer@17486" method="_on_gui_input"]
-[connection signal="mouse_entered" from="GridContainer/@PanelContainer@17486" to="GridContainer/@PanelContainer@17486" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="GridContainer/@PanelContainer@17486" to="GridContainer/@PanelContainer@17486" method="_on_mouse_exited"]
-[connection signal="pressed" from="VBoxContainer2/BtnLoad" to="." method="_on_btn_load_pressed"]
-[connection signal="pressed" from="VBoxContainer2/BtnImport" to="." method="_on_btn_import_pressed"]
-[connection signal="pressed" from="VBoxContainer2/BtnGenerate" to="." method="_on_btn_generate_pressed"]
+[connection signal="gui_input" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/ComponentVew" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/ComponentVew" method="_on_gui_input"]
+[connection signal="mouse_entered" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/ComponentVew" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/ComponentVew" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/ComponentVew" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/ComponentVew" method="_on_mouse_exited"]
+[connection signal="gui_input" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21845" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21845" method="_on_gui_input"]
+[connection signal="mouse_entered" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21845" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21845" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21845" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21845" method="_on_mouse_exited"]
+[connection signal="gui_input" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21846" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21846" method="_on_gui_input"]
+[connection signal="mouse_entered" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21846" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21846" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21846" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21846" method="_on_mouse_exited"]
+[connection signal="gui_input" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21847" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21847" method="_on_gui_input"]
+[connection signal="mouse_entered" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21847" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21847" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21847" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21847" method="_on_mouse_exited"]
+[connection signal="gui_input" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21848" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21848" method="_on_gui_input"]
+[connection signal="mouse_entered" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21848" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21848" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21848" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21848" method="_on_mouse_exited"]
+[connection signal="gui_input" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21849" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21849" method="_on_gui_input"]
+[connection signal="mouse_entered" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21849" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21849" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21849" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21849" method="_on_mouse_exited"]
+[connection signal="gui_input" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21850" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21850" method="_on_gui_input"]
+[connection signal="mouse_entered" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21850" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21850" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21850" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21850" method="_on_mouse_exited"]
+[connection signal="gui_input" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21851" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21851" method="_on_gui_input"]
+[connection signal="mouse_entered" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21851" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21851" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21851" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21851" method="_on_mouse_exited"]
+[connection signal="gui_input" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21852" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21852" method="_on_gui_input"]
+[connection signal="mouse_entered" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21852" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21852" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21852" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21852" method="_on_mouse_exited"]
+[connection signal="gui_input" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21853" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21853" method="_on_gui_input"]
+[connection signal="mouse_entered" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21853" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21853" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21853" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21853" method="_on_mouse_exited"]
+[connection signal="gui_input" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21854" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21854" method="_on_gui_input"]
+[connection signal="mouse_entered" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21854" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21854" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21854" to="Vbox/ComponentScrollContainer/MainPanel/GridContainer/@PanelContainer@21854" method="_on_mouse_exited"]
+[connection signal="pressed" from="Vbox/VBoxContainer/BtnLoad" to="Vbox/ComponentScrollContainer/MainPanel" method="_on_btn_load_pressed"]
+[connection signal="pressed" from="Vbox/VBoxContainer/BtnImport" to="Vbox/ComponentScrollContainer/MainPanel" method="_on_btn_import_pressed"]
+[connection signal="pressed" from="Vbox/VBoxContainer/BtnGenerate" to="Vbox/ComponentScrollContainer/MainPanel" method="_on_btn_generate_pressed"]

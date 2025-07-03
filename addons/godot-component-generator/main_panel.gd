@@ -1,10 +1,19 @@
+# dynamic size fixes made by IdkMaestro.
+
+# added scrollcontainer to fix most of the weird overflows with the GUI.
+# i didnt know what to name it.
+
+# note: for some weird reason, manually adding/removing the component_view's does not update
+# ComponentScrollContainer, but reloading the whole project or reloading the scene does correctly
+# update the scroll-wheel. personally, i have no clue why.
+
 @tool
 extends Control
 
 signal selected_component_signal(component_name, path, description)
 
 @onready var grid_container = $GridContainer
-@onready var btn_import = $VBoxContainer2/BtnImport
+@onready var btn_import = $"../../VBoxContainer/BtnImport"
 @onready var lbl_message = $LblMessage
 
 var component_view: PackedScene = preload("res://addons/godot-component-generator/ComponentView/component_view.tscn")
@@ -18,6 +27,8 @@ var selected_component_name: String = ""
 var selected_component_for_generation_name: String = ""
 
 func _ready() -> void:
+	# Added this for more visual clarity, even after the dynamic sizing fixes.
+	grid_container.columns = 3
 	selected_component_signal.connect(_on_component_selected)
 	prepare_custom_plugin_settings()
 	load_components()
@@ -115,7 +126,8 @@ func _on_component_selected(component_name: String, component_path: String, comp
 	btn_import.text = btn_import.text + ": " + component_name
 
 func _on_btn_import_pressed() -> void:
-	var file_dialog_instance = file_dialog.instantiate()
+	# specify the type of the variant for the auto-completion to kick in.
+	var file_dialog_instance: FileDialog = file_dialog.instantiate()
 	add_child(file_dialog_instance)
 	file_dialog_instance.dir_selected.connect(_on_dir_target_selected)
 
@@ -180,7 +192,9 @@ func reload_filesystem() -> void:
 	_on_dir_selected(path_from_settings)
 
 func _on_btn_generate_pressed() -> void:
-	var file_dialog_target_instance = file_dialog_target.instantiate()
+	# same here
+	# specify the type of the variant for the auto-completion to kick in.
+	var file_dialog_target_instance: FileDialog = file_dialog_target.instantiate()
 	add_child(file_dialog_target_instance)
 	file_dialog_target_instance.dir_selected.connect(_on_dir_save_target_selected)
 

@@ -42,7 +42,12 @@ func prepare_values(local_component_name: String, path: String = "C://", descrip
 	lbl_description.text = component_description
 	prepare_tooltip(local_component_name,  path)
 
-func _on_gui_input(event) -> void:
-	if event.is_pressed() == true:
+func _on_gui_input(event: InputEvent) -> void:
+	# before only if the action was pressed was checked for. 
+	# this more 'rigorous' check instead fixes the fact that
+	# when you scroll with the mouse-wheel, you select a component 
+	if event is InputEventMouseButton && \
+	event.button_index == MOUSE_BUTTON_LEFT && \
+	event.is_pressed():
 		component_view.self_modulate = Color(0.7, 0.7, 0.7)
 		parent.selected_component_signal.emit(component_name, component_path, component_description)

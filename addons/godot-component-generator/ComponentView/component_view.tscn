@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://e7oq2abndy2r"]
 
-[ext_resource type="Script" path="res://addons/godot-component-generator/ComponentView/component_view.gd" id="1_ti520"]
+[ext_resource type="Script" uid="uid://d3b4fmvqq4lrg" path="res://addons/godot-component-generator/ComponentView/component_view.gd" id="1_ti520"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ug0s"]
 bg_color = Color(0.133333, 0.141176, 0.156863, 1)
@@ -16,7 +16,6 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [node name="ComponentVew" type="PanelContainer"]
-custom_minimum_size = Vector2(500, 100)
 scale = Vector2(1.00113, 1)
 size_flags_horizontal = 3
 tooltip_text = "RandomAudioStream"
@@ -38,7 +37,7 @@ layout_mode = 2
 
 [node name="LblName" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 30
 text = "RandomAudioStream"
 clip_text = true
 

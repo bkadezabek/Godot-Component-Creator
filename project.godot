@@ -12,12 +12,16 @@ config_version=5
 
 config/name="GodotComponentCreator"
 run/main_scene="res://addons/godot-component-generator/main_panel.tscn"
-config/features=PackedStringArray("4.2", "Mobile")
+config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://addons/godot-component-generator/rotation.png"
 
 [display]
 
 window/subwindows/embed_subwindows=false
+
+[dotnet]
+
+project/assembly_name="GodotComponentCreator"
 
 [editor_plugins]
 
