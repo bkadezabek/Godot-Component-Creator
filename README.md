@@ -31,3 +31,5 @@ Now you can import that component across all your project by hitting the import 
 If for what ever reason some part of the plugin does not autorefresh go to (Project Settings > Plugins) and disable and then re-enable the Godot Component Creator plugin.
 
 Have fun coding games :)
+
+Aditional Credit: @IdkMaestro
